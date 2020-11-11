@@ -1,8 +1,14 @@
 import pt.isel.canvas.*
-import kotlin.random.Random.Default.nextInt
 
 data class Position(val x:Int, val y:Int)
 data class Velocity(val dx:Int, val dy:Int)
+
+/*
+fun plus(pos:Position, vel:Velocity) :Position {
+    return Position(pos.x+vel.dx , pos.y+vel.dy)
+}
+ */
+operator fun Position.plus(vel:Velocity) = Position(x+vel.dx, y+vel.dy)
 
 data class Ball(val pos:Position, val vel:Velocity, val radius:Int =20, val color:Int =RED)
 
@@ -12,15 +18,22 @@ fun Canvas.drawBall(b :Ball) {
 }
 
 fun Ball.step(xLimit :Int, yLimit :Int) :Ball {
-    val x = pos.x + vel.dx
-    val y = pos.y + vel.dy
+    //val x = pos.x + vel.dx
+    //val y = pos.y + vel.dy
+    //val p = pos.plus(vel)
+    val p = pos + vel
+    val (x,y) = pos
+    //val x = pos.component1()
+    //val y = pos.component2()
     return when {
-        x+radius > xLimit || x-radius < 0 ->
+        //x > xLimit-radius || x < radius ->
+        x !in radius .. xLimit-radius ->
             Ball( Position(pos.x-vel.dx,y) , Velocity(-vel.dx,vel.dy), radius, color)
-        y+radius > yLimit || y-radius < 0 ->
+        //y+radius > yLimit || y-radius < 0 ->
+        y !in radius .. yLimit-radius ->
             Ball( Position(x,pos.y-vel.dy) , Velocity(vel.dx,-vel.dy), radius, color)
         else ->
-            Ball( Position(x,y), vel, radius, color )
+            Ball( p, vel, radius, color )
     }
 }
 
@@ -30,21 +43,15 @@ fun main() {
         var ball = Ball(Position(arena.width/2,arena.height/2), Velocity(4,2), color = RED)  // Mutabilidade
         arena.drawBall(b = ball)
         arena.onTimeProgress(10) { tm ->
-            //ball = stepBall(ball, arena.width)
             ball = ball.step(arena.width, arena.height)
-            //drawBall(arena,ball)
             arena.drawBall(ball)
-            //println(tm)
         }
         arena.onKeyPressed { ke ->
-            if (ke.char == 'v')
-                ball = Ball(ball.pos, Velocity(nextInt(-5, 6), nextInt(-5, 6)), ball.radius, ball.color)
+            ball = if (ke.char == 'v')
+                Ball(ball.pos, Velocity((-5..5).random(), (-5..5).random()), ball.radius, ball.color)
             else
-                ball = Ball(ball.pos, ball.vel, ball.radius, when (ke.char) {
-                    'b' -> BLUE
-                    'r' -> RED
-                    'g' -> GREEN
-                    else -> BLACK
+                Ball(ball.pos, ball.vel, ball.radius, when (ke.char) {
+                    'b' -> BLUE ; 'r' -> RED ; 'g' -> GREEN  else -> BLACK
                 } )
         }
     }
