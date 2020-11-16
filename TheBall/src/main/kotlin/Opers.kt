@@ -18,12 +18,12 @@ fun doOperation(operator:Char, fx : (Int,Int)->Int ) {
     println("$a $operator $b = $res")
 }
 
-fun add(a:Int, b:Int) :Int { return a + b }
-fun sub(a:Int, b:Int) :Int = a - b
-fun mult(a:Int, b:Int) = a * b
-
 fun main() {
+    fun add(a:Int,b:Int) = a + b
+    val sub :(Int,Int)->Int = { a,b -> a - b }
+    val mult = { a:Int,b:Int -> a*b }
+
     doOperation('+',::add)
-    doOperation('-',::sub)
-    doOperation('x',::mult)
+    doOperation('-',sub)
+    doOperation('x',mult)
 }
