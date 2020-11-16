@@ -47,7 +47,7 @@ fun main() {
             arena.drawBall(ball)
         }
         arena.onKeyPressed { ke ->
-            ball = if (ke.char == 'v')
+            ball = if (ke.char == 'v' || ke.char == 'V')
                 Ball(ball.pos, Velocity((-5..5).random(), (-5..5).random()), ball.radius, ball.color)
             else
                 Ball(ball.pos, ball.vel, ball.radius, when (ke.char) {
