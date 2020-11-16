@@ -11,7 +11,9 @@ fun readInt(quest:String) :Int {
     else readLine()!!.trim().toInt()
 }
 
-fun doOperation(operator:Char, fx : (Int,Int)->Int ) {
+typealias OperFx = (Int,Int)->Int
+
+fun doOperation(operator:Char, fx :OperFx ) {
     val a = readInt("A")
     val b = readInt("B")
     val res = fx(a,b)
@@ -19,11 +21,7 @@ fun doOperation(operator:Char, fx : (Int,Int)->Int ) {
 }
 
 fun main() {
-    fun add(a:Int,b:Int) = a + b
-    val sub :(Int,Int)->Int = { a,b -> a - b }
-    val mult = { a:Int,b:Int -> a*b }
-
-    doOperation('+',::add)
-    doOperation('-',sub)
-    doOperation('x',mult)
+    doOperation('+', {a:Int,b:Int -> a+b} )
+    doOperation('-', { x,y -> x-y } )
+    doOperation('x') { a,b -> a * b }
 }
