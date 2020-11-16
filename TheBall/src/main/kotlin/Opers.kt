@@ -1,5 +1,5 @@
 
-const val DEBUG = false
+const val DEBUG = true
 
 fun readInt(quest:String) :Int {
     print("$quest? ")
@@ -11,24 +11,20 @@ fun readInt(quest:String) :Int {
     else readLine()!!.trim().toInt()
 }
 
-fun doPlus() {
+fun doOperation(operator:Char) {
     val a = readInt("A")
     val b = readInt("B")
-    println("$a + $b = ${ a + b }")
-}
-fun doMinus() {
-    val a = readInt("A")
-    val b = readInt("B")
-    println("$a - $b = ${ a - b }")
-}
-fun doMultiply() {
-    val a = readInt("A")
-    val b = readInt("B")
-    println("$a x $b = ${ a * b }")
+    val res = when (operator) {
+        '+' -> a + b
+        '-' -> a - b
+        else -> a * b // smell code
+    }
+    println("$a $operator $b = $res")
 }
 
+
 fun main() {
-    doPlus()
-    doMinus()
-    doMultiply()
+    doOperation('+')
+    doOperation('-')
+    doOperation('x')
 }
