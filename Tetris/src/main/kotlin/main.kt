@@ -3,12 +3,12 @@ import pt.isel.canvas.*
 /**
  * Grid width in blocks
  */
-const val GRID_WIDTH = 10
+const val GRID_WIDTH = 5
 
 /**
  * Grid height in blocks
  */
-const val GRID_HEIGHT = 20
+const val GRID_HEIGHT = 8
 
 /**
  * Valid horizontal block positions.
@@ -27,7 +27,7 @@ val GRID_Y = 0 until GRID_HEIGHT
  * The block is fixed when it touches the base or on top of another block.
  * A new block appears with a random color.
  */
-fun main() {
+fun main() {  // ()->Unit
     onStart {
         val arena = Canvas(GRID_WIDTH*BLOCK_SIDE, GRID_HEIGHT*BLOCK_SIDE, BLACK)
         var game = Tetris( newBlock(), emptyList() )
@@ -47,4 +47,20 @@ fun main() {
         }
     }
     onFinish { }
+
+    /*
+    val l = listOf(10, 13, 7, 3)
+    println(l)
+    val r = l.map { 'A'+it }
+    println(r)
+    val i = l.filter { it%2!=0 }
+    println(i)
+    println(l.any{ it%2==0 })
+    println(l.filter { it%2==0 }.size>0)
+    println(l.all{ it>5 })
+    println(l[2])
+    println( l + 27 + listOf(0,1,2) )
+    println( l )
+    println( l - 13 - listOf(10,27,15) )
+    */
 }
