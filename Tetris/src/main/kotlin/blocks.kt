@@ -42,10 +42,11 @@ fun Canvas.drawBlock(b:Block) {
  * @receiver Original block
  */
 fun Block.move(dx:Int, dy:Int, f:List<Block>) :Block? {
-    val x = x + dx
-    val y = y + dy
-    return if ( x in GRID_X && y in GRID_Y && f.all { it.x!=x || it.y!=y }) Block(x ,y, color) else null
+    val b= Block(x + dx, y + dy, color)
+    return if (b.valid(f)) b else null
 }
+
+fun Block.valid(f:List<Block>) = x in GRID_X && y in GRID_Y && f.all { it.x!=x || it.y!=y }
 
 /**
  * Checks whether the block should be fixed.
