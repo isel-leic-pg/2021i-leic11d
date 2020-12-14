@@ -47,8 +47,23 @@ fun main() {  // ()->Unit
         }
     }
     onFinish { }
-    /*
-    val x:List<Int> = (1..10).reversed().filter{ it%2==0 }
-    x.forEach { println(it) }
-     */
+    f( Dir.LEFT )
 }
+
+enum class Dir(val dx:Int,val dy:Int) { UP(0,-1), DOWN(0,1), LEFT(-1,0), RIGHT(1,0) }
+
+/*
+data class Dir(val name:String, val ordinal:Int)
+val UP = Dir("UP",0)
+val DWON = Dir("DOWN",1)
+    ...
+*/
+
+fun f(dir:Dir) {
+    println("${dir.dx},${dir.dy}")
+    println(dir.name)
+    println(dir.ordinal)
+    Dir.values().forEach { print("$it ") }
+    println()
+}
+
