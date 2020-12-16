@@ -2,9 +2,9 @@ import pt.isel.canvas.*
 
 data class Piece(val type:Tetromino, val blks:List<Block>)
 
-enum class Tetromino(val color:Int) { J(BLUE), O(YELLOW), I(CYAN) } // ,L,S,Z,T
+const val ORANGE = 0xFFA500
 
-val tetrominos = listOf('J','O','I') //,'L','S','Z','T')
+enum class Tetromino(val color:Int) { J(BLUE), O(YELLOW), I(CYAN), L(ORANGE), S(GREEN), Z(RED), T(MAGENTA) }
 
 fun createPiece(t:Tetromino,x1:Int,y1:Int,x2:Int,y2:Int,x3:Int,y3:Int) :Piece {
     val x = GRID_WIDTH / 2
@@ -15,11 +15,15 @@ fun createPiece(t:Tetromino,x1:Int,y1:Int,x2:Int,y2:Int,x3:Int,y3:Int) :Piece {
     ))
 }
 
-fun newPiece() = when(Tetromino.values().random()) {
-        Tetromino.J-> createPiece(Tetromino.J,0,-1,0,1,-1,1)
-        Tetromino.I -> createPiece(Tetromino.I,0,-1,0,1,0,2)
-        else -> createPiece(Tetromino.O,0,-1,1,-1,1,0)
-    }
+fun newPiece() = when(val type= Tetromino.values().random()) {
+    Tetromino.J -> createPiece(type, 0, -1, 0, 1, -1, 1)
+    Tetromino.O -> createPiece(type, 0, -1, 1, -1, 1, 0)
+    Tetromino.I -> createPiece(type, 0, -1, 0, 1, 0, 2)
+    Tetromino.S -> createPiece(type, 1, 0, 0, 1, -1, 1)
+    Tetromino.T -> createPiece(type, 1, 0, -1, 0, 0, 1)
+    Tetromino.L -> createPiece(type, 0, -1, 0, 1, 1, 1)
+    Tetromino.Z -> createPiece(type, 1, 0, 0, -1, -1, -1)
+}
 
 fun Canvas.drawPiece(p:Piece)  {
     p.blks.forEach { drawBlock(it) }

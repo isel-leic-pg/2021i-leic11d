@@ -3,12 +3,12 @@ import pt.isel.canvas.*
 /**
  * Grid width in blocks
  */
-const val GRID_WIDTH = 6
+const val GRID_WIDTH = 10
 
 /**
  * Grid height in blocks
  */
-const val GRID_HEIGHT = 10
+const val GRID_HEIGHT = 20
 
 /**
  * Valid horizontal block positions.
@@ -27,23 +27,27 @@ val GRID_Y = 0 until GRID_HEIGHT
  * The block is fixed when it touches the base or on top of another block.
  * A new block appears with a random color.
  */
-fun main() {  // ()->Unit
+fun main() {
     onStart {
         val arena = Canvas(GRID_WIDTH*BLOCK_SIDE, GRID_HEIGHT*BLOCK_SIDE, BLACK)
         var game = Tetris( newPiece(), emptyList() )
+        fun changeGame(g :Tetris?) {
+            if (g==null) return
+            game = g
+            arena.drawTetris(game)
+        }
         arena.drawTetris(game)
         arena.onKeyPressed { ke ->
-            val g :Tetris? = when(ke.code) {
+            changeGame( when(ke.code) {
                 LEFT_CODE -> game.move(-1,0)
                 RIGHT_CODE -> game.move(+1,0)
                 DOWN_CODE -> game.move(0,+1)
                 UP_CODE -> game.rotate()
                 else -> null
-            }
-            if (g!=null) {
-                game = g
-                arena.drawTetris(game)
-            }
+            } )
+        }
+        arena.onTimeProgress(500) {
+            changeGame(game.move(0,+1))
         }
     }
     onFinish { }
