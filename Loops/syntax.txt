@@ -1,0 +1,15 @@
+
+while ( <expressão> ) {
+   <instrução1>
+   <instrução2>
+   ...
+}
+
+for ( <name> in <range or list> ) {
+   <instrução1>
+   <instrução2>
+   ...
+}
+
+
+
