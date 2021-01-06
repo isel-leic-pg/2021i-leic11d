@@ -11,5 +11,10 @@ for ( <name> in <range or list> ) {
    ...
 }
 
+do {
+   <instrução1>
+   <instrução2>
+   ...
+} while ( <expressão> )
 
 
