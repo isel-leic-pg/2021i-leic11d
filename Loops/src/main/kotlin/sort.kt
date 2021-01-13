@@ -14,14 +14,24 @@ fun List<Float>.min2() :Float =
     if (size==1) this[0]
     else min(this[0],(this-this[0]).min2())
 
-
-fun sort(vals:List<Float>) :List<Float> {
+fun sort1(vals:List<Float>) :List<Float> {
     var l = vals
     var res = emptyList<Float>()
     while (l.isNotEmpty()) {
-        val m = vals.min()
+        val m = l.min()
         res = res + m
         l = l - m
+    }
+    return res
+}
+
+fun sort2(vals:List<Float>) :List<Float> {
+    val l:MutableList<Float> = vals.toMutableList()
+    val res:MutableList<Float> = mutableListOf<Float>()
+    while (l.isNotEmpty()) {
+        val m = l.min()
+        res.add(m)
+        l.remove(m)
     }
     return res
 }
@@ -34,6 +44,6 @@ fun main() {
     println(min)
     val idx = find2(vals,17.5F)
     println(idx)
-    val ordered = sort(vals)
+    val ordered = sort2(vals)
     println(ordered)
 }
