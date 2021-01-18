@@ -36,7 +36,6 @@ fun sort2(vals:List<Float>) :List<Float> {
     return res
 }
 
-
 fun main() {
     val vals = createListFloat2(from = 14.0F, to = 20.0F, delta = 0.5F).shuffled()
     println(vals)
