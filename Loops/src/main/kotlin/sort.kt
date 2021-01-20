@@ -1,3 +1,4 @@
+import kotlin.system.measureTimeMillis
 
 fun min(a:Float, b:Float) = if (a<b) a else b
 
@@ -27,7 +28,7 @@ fun sort1(vals:List<Float>) :List<Float> {
 
 fun sort2(vals:List<Float>) :List<Float> {
     val l:MutableList<Float> = vals.toMutableList()
-    val res:MutableList<Float> = mutableListOf<Float>()
+    val res:MutableList<Float> = mutableListOf()
     while (l.isNotEmpty()) {
         val m = l.min()
         res.add(m)
@@ -45,4 +46,21 @@ fun main() {
     println(idx)
     val ordered = sort2(vals)
     println(ordered)
+
+    val lst = createListFloat2(0F, 10F, 0.01F).shuffled()
+    //println(lst)
+
+    val tm1 = measureTimeMillis {
+        repeat(5000) {
+            val r1 = sort1(lst)
+        }
+    }
+    println("tm1= $tm1 ms")
+
+    val tm2 = measureTimeMillis {
+        repeat(5000) {
+            val r2 = sort2(lst)
+        }
+    }
+    println("tm2= $tm2 ms")
 }
